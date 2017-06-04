@@ -1,0 +1,22 @@
+notifications:
+  email: false
+
+before_install:
+  - wget https://releases.hashicorp.com/terraform/0.9.5/terraform_0.9.6_linux_amd64.zip
+  - unzip terraform_0.9.6_linux_amd64.zip
+
+script:
+  - ./terraform init
+  - ./terraform plan
+
+before_deploy:
+  - ./terraform apply
+
+deploy:
+- provider: s3
+  access_key_id: $AWS_ACCESS_KEY_ID
+  secret_access_key: $AWS_SECRET_ACCESS_KEY
+  bucket: "terraform-travis.hearthfinder.net"
+  region: "ap-southeast-2"
+  on:
+    branch: master
