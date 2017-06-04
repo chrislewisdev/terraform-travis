@@ -35,7 +35,7 @@ resource "aws_s3_bucket" "www_website_bucket" {
   policy = "${replace(file("s3-website-policy.json"), "BUCKET_NAME", "www.${var.website_name}")}"
 
   website {
-    redirect_all_requests_to = "${aws_s3_bucket.website_bucket.website_domain}"
+    redirect_all_requests_to = "${aws_s3_bucket.website_bucket.id}"
   }
 }
 
